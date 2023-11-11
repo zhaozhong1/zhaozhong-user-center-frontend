@@ -201,8 +201,9 @@ export default () => {
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]); // 选中的行keys
   const [selectedRows, setSelectedRows] = useState<API.CurrentUser[]>([]); // 选中的行数据
-
   const [avatar,setAvatar]= useState<string[]>([]);
+
+  const [uploadAvatar,setUploadAvatar] = useState<string>();
 
   /**
    * 通过id进行单个删除
@@ -635,6 +636,13 @@ export default () => {
                  2.若文件大小超过允许范围，则ignore
                  */
                 beforeUpload: (file) => {
+                  //在上传前判断是否为生产环境，为生产环境则使用服务器ip和端口
+                  if(process.env.NODE_ENV === 'production'){
+                    setUploadAvatar("http://120.25.164.74:16060/api/upload/avatar");
+                  }else{
+                    setUploadAvatar("http://localhost:8000/api/upload/avatar");
+                  }
+
                   if(file.size>5242880){
                     message.error("请上传不超过5MB的文件！");
                     return Upload.LIST_IGNORE;
@@ -655,7 +663,7 @@ export default () => {
                   return Upload.LIST_IGNORE;
                 },
               }}
-              action="/api/upload/avatar" //上传图片接口地址
+              action={uploadAvatar} //上传图片接口地址
               onChange={addUser}
               extra="仅支持.jpg、.jpeg、.png等格式"
             />

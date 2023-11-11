@@ -165,4 +165,5 @@ export default defineConfig({
   //   'react-dom': 'ReactDOM',
   //   "@ant-design/charts": "charts"
   // }
+  esbuildMinifyIIFE:true,
 });
