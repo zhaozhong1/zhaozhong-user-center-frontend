@@ -4,7 +4,7 @@ export default [
     routes: [
       { path: '/user/login', component: './User/Login' },
       { path: '/user/register', component: './User/Register' },
-
+      { path: '/user/account/center', component: './account/center' },
     ],
   },
   {

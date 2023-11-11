@@ -16,6 +16,8 @@ declare namespace API {
     createTime?: Date;
   };
 
+
+
   type BaseResponse<T> = {
     code: number;
     data: T;
@@ -71,7 +73,22 @@ declare namespace API {
     type?: string;
   };
 
+  type SearchParams = {
+    id?:bigint;
+    userName?:string;
+    userAccount?:string;
+  }
 
+  type insertParams = {
+    userName?: string;
+    userAccount?: string;
+    userPassword?: string;
+    gender?: number;
+    phone?: string;
+    email?: string;
+    userRole?: number;
+    planetCode?:string;
+  }
 
   type ErrorResponse = {
     /** 业务约定的错误码 */

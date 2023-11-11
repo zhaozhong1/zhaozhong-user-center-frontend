@@ -68,17 +68,86 @@ export async function register(body: API.RegisterParams, options?: { [key: strin
  * /api/user/search
  */
 // body: API.RegisterParams,
-export async function searchUsers( options?: { [key: string]: any }) {
+export async function searchUsers(searchUser:API.SearchParams,options?: { [key: string]: any }) {
   return request<API.BaseResponse<API.CurrentUser[]>>('/api/user/search', {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    // data: body,
+    data: searchUser,
     ...(options || {}),
   });
 }
 
+export async function authorized(selectedIdList:number[],options?: { [key: string]: any }) {
+  return request<API.BaseResponse<API.CurrentUser[]>>('/api/user/authorized', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: selectedIdList,
+    ...(options || {}),
+  });
+}
+
+export async function deleteList(selectedIdList:number[],options?: { [key: string]: any }) {
+  return request<API.BaseResponse<API.CurrentUser[]>>('/api/user/deleteByIds', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: selectedIdList,
+    ...(options || {}),
+  });
+}
+
+/**
+ * @description 根据id删除用户
+ * @METHOD : DELETE
+ * /api/user/delete
+ */
+export async function deleteUserById(user: API.CurrentUser,options?: { [key: string]: any }){
+  return request<API.BaseResponse<API.CurrentUser[]>>('/api/user/delete/'+user.id,{
+    method:'DELETE',
+    headers:{
+      'Content-Type': 'application/json',
+    },
+    ...(options || {}),
+  })
+}
+
+export async function updateUser(user:API.insertParams,options?: { [key: string]: any }){
+  return request<API.BaseResponse<API.CurrentUser>>('/api/user/addUser  ',{
+    method:'POST',
+    headers:{
+      'Content-Type': 'application/json',
+    },
+    data: user,
+    ...(options || {}),
+  })
+}
+
+export async function insertUser(user:API.insertParams,avatarUrl:string,options?: { [key: string]: any }){
+  const data = { ...user, avatarUrl }; // 将 user 和 avatarUrl 合并成一个对象
+  return request<API.BaseResponse<API.CurrentUser>>('/api/user/addUser',{
+    method:'POST',
+    headers:{
+      'Content-Type': 'application/json',
+    },
+    data: data,
+    ...(options || {}),
+  })
+}
+export async function uploadAvatar(avatar:File,options?: { [key: string]: any }){
+  return request<API.BaseResponse<string>>('/api/upload/avatar',{
+    method:'POST',
+    headers:{
+      'Content-Type': 'application/json',
+    },
+    data: avatar,
+    ...(options || {}),
+  })
+}
 
 
 /** 此处后端没有提供注释 GET /api/notices */
