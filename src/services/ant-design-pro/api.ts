@@ -117,7 +117,7 @@ export async function deleteUserById(user: API.CurrentUser,options?: { [key: str
 }
 
 export async function updateUser(user:API.insertParams,options?: { [key: string]: any }){
-  return request<API.BaseResponse<API.CurrentUser>>('/api/user/addUser  ',{
+  return request<API.BaseResponse<API.CurrentUser>>('/api/user/update  ',{
     method:'POST',
     headers:{
       'Content-Type': 'application/json',
